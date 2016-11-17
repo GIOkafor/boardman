@@ -1,0 +1,46 @@
+{% extends '_base.html' %}
+
+{% block title %}{% endblock %}
+
+
+{% block content %}
+
+<h1>Create bet</h1>
+
+<div class="container" ng-controller="BetCreationController">
+	<div class="row">
+		<div class="col-xs-12 col-sm-6 col-md-8 event">
+			<h4>Events/Fixture</h4>
+				<a class="btn btn-primary" ui-sref="leagues">League</a>
+				<a class="btn btn-primary" ui-sref="fixtures">Featured Event</a>
+				
+				<ui-view class="options">
+					Contents go here
+				</ui-view>
+		</div>
+
+		<div class="col-xs-6 col-md-4 well bet_slip">
+			<h4>Bet Slip</h4>
+		</div>
+	</div>
+</div>
+
+<form id="create-new-bet">
+	<div class="form-group">
+		<label for="username" class="control-label">Email</label>
+		<p class="form-control-static"> {{user.email}} </p>
+	</div>
+	<div class="form-group">
+		<label for="stake" class="control-label">Stake</label>
+		<input type="number" id="stake" class="form-control" placeholder="">
+	</div>
+	<div class="form-group">
+		<label for="match_stake" class="control-label">Match Stake</label>
+		<input type="number" id="match_stake" class="form-control" placeholder="">
+	</div>
+	<div class="form-group">
+		<label for="" class="control-label">Returns</label>
+		<input type="number" id="returns" class="form-control" placeholder="">
+	</div>
+	<button type="submit" class="btn btn-primary">Submit</button>
+</form>

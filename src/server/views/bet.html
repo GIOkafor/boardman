@@ -1,0 +1,36 @@
+{% extends '_base.html' %}
+
+{% block title %}{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+	<h1>created by @{{bet.author}}</h1>
+
+	<div>
+		<span>Creator Stake</span>
+		<span class="help">Definition of creator stake goes here</span>
+		<span>${{bet.stake}}</span>
+	</div>
+
+	<div>
+		<span>Match Stake</span>
+		<span class="help">Definition of match stake goes here</span>
+		<span>${{bet.match_stake}}</span>
+	</div>
+
+	<div>
+		<span>Payout</span>
+		<span class="help">Definition of creator payout goes here</span>
+		<span>${{bet.returns}}</span>
+	</div>
+
+	<a href="/">Back to home page</a>
+  <br><br>
+  {% if user %}
+    <a class="btn btn-primary" href="/charge/{{bet._id.toString()}}" role="button">Bet Now</a>
+  {% endif %}
+</div>
+
+{% endblock %}

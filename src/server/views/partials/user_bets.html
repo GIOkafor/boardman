@@ -1,0 +1,32 @@
+<div class="container bet_container">
+		{% for bet in bets %}
+		<div class="panel panel-default bet_panel">
+			<div class="panel-heading">Soccer/Premier League {{bet.category}}</div>
+
+			<div class="bet_contents">
+				<span>Created by @{{bet.author}}</span>
+
+				<div class="bet_payments">
+					<div class="bet_payment">
+						<span>Creator Stake</span>
+						<span class="hidden help">Definition of creator stake goes here</span>
+						<span>${{bet.stake}}</span>
+					</div>
+
+					<div class="bet_payment">
+						<span>Match Stake</span>
+						<span class="hidden help">Definition of match stake goes here</span>
+						<span>${{bet.match_stake}}</span>
+					</div>
+
+					<div class="bet_payment">
+						<span>Payout</span>
+						<span class="hidden help">Definition of creator payout goes here</span>
+						<span>${{bet.returns}}</span>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		{% endfor %}	
+</div>

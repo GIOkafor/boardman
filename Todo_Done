@@ -1,0 +1,11 @@
+Done
+------------------------
+* individual homescreen bet partial 
+* bet_slip model created
+* get route to bet by id 
+
+Todos
+------------
+* post route for new bet(untested)
+* create new bet view 
+* create bet details view

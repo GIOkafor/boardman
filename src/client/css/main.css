@@ -1,0 +1,26 @@
+.body {
+  padding-top: 70px;
+}
+
+.form-row {
+  padding-top: 7px;
+}
+
+/* Home page */
+.bet_panel{width: 93.5%;}
+
+.bet_container{padding-left: 0px; padding-right: 0px;}
+
+.bet_contents{padding: 5px;display: flex;flex-flow: column;}
+
+.bet_payments{display: flex;justify-content: space-between;}
+
+.bet_payment{display: flex;flex-flow: column;width: 33%;border:1px solid #dddddd;text-align: center;}
+
+.search-filters{display: flex;align-items: center;justify-content: space-between;}
+
+.search_group_container{display: flex;}
+
+
+/*   Bet Creation Page   */
+.options{border: 1px solid #dddddd; padding: 5px;}
