@@ -1,3 +1,7 @@
+/*
+var StattleshipAPI = require('node-stattleship');
+var stattleship = new StattleshipAPI('34d56c576cb68e5af75f5c6667a3f0e2');
+*/
 angular
 	.module('app', ['ui.router'])
 	.controller('BetCreationController', BetCreationController)
@@ -12,13 +16,16 @@ angular
 		var fixturesState = {
 			name: 'fixtures',
 			url: '/fixtures',
-			template: '../views/fixtures.html'
+			templateUrl: '../views/fixtures.html',
+			params: {
+				games: null
+			} 
 		}
 		
 		var fixtureDetailsState = {
 			name: 'fixture_details',
 			url: 'fixture-details',
-			template: '../views/fixture_details.html'
+			templateUrl: '../views/fixture_details.html'
 		}
 
 		$stateProvider.state(leaguesState);
@@ -26,11 +33,16 @@ angular
 		$stateProvider.state(fixtureDetailsState);
 	});
 
-function BetCreationController($scope) {
+function BetCreationController($scope, $state, FixturesFactory) {
 
 	//functions
 	$scope.showLeagues = function(){
-		console.log("Leagues clicked");
+		console.log("Showing leagues");
+		var promise = FixturesFactory.getGames();
+		promise.then(function(payload){
+			console.log(payload);
+			$state.go('fixtures', {games: payload.data});
+		})
 	}
 }
 
@@ -47,19 +59,29 @@ function FixturesFactory($http){
 
 	function getGames(){
 		var url = "https://api.stattleship.com/baseball/mlb/games";
-
-		$http.get(url, {
+		var custom_headers = {
 			headers :{
-				'Authorization': 'Token token=d46712663c6d9bff207779561f576a50'
+				'Authorization': 'Token token=34d56c576cb68e5af75f5c6667a3f0e2',
+				'Content-Type': 'application/json',
+  				'Accept': 'application/vnd.stattleship.com; version=1'
 			}
-		}).then(successCallback, errorCallback);
-
-		function successCallBack(){
-			console.log("Successfully retrieved data");
 		}
 
-		function errorCallBack(){
-			console.log("Failed to retrieve data");
-		}
+		return $http.get(url, custom_headers).then(function successCallBack(response){
+					//testing code start
+					console.log("Successfully retrieved data");
+					//console.log(response.data.games);
+					//testing code end
+
+
+					//main here
+					//store array of games
+					games = response.data.games;
+					return games;
+
+				}, function errorCallBack(){
+						console.log("Failed to retrieve data");
+					}
+		);
 	}
 }
