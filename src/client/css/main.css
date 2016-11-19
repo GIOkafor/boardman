@@ -25,7 +25,15 @@
 /*   Bet Creation Page   */
 .options{border: 1px solid #dddddd; padding: 5px;}
 
-.CUSTOM_CARD{
+.leagues{
+	margin-top: 20px;
+	display: flex;
+	align-items: flex-start;
+    justify-content: space-between;
+    width: 600px;
+}
+
+.CUSTOM_CARD_GOOGLE{
 	background-color: #fff;
     height: 44px;
     vertical-align: top;

@@ -33,26 +33,49 @@ angular
 		$stateProvider.state(fixtureDetailsState);
 	});
 
-function BetCreationController($scope, $state, FixturesFactory) {
-	$scope.games = [];
-	$scope.details = false;
+//injectables-go-here
+BetCreationController.$inject = ['FixturesFactory'];
+
+function BetCreationController(FixturesFactory) {
+	/*jshint validthis:true*/
+    var vm = this;
+
+    vm.games = [];
+	vm.details = false;
+    vm.showing = '';
 
 	//functions
-	$scope.showGames = function(sport, league){
+	vm.showGames = function(sport, league){
 		console.log("Showing leagues");
 		var promise = FixturesFactory.getGames(sport, league);
 		promise.then(function(payload){
 			console.log(payload);
-			//$state.go('fixtures', {games: payload.data});
-			$scope.games = payload;
+			vm.games = payload;
 		})
 	}
 
-	$scope.showDetails = function(){
-		if($scope.details == false)
-		$scope.details = true;
-	else
-		$scope.details=false;
+	vm.showDetails = function(game){
+		//testing code
+        console.log("Name is "+game.name);
+        console.log("Clicked ID is "+ game.id);
+        console.log("Showing ID is "+ vm.showing);
+        console.log("Details status is "+ vm.details);
+
+        if(vm.showing != game.id && vm.details == false){
+            vm.details = true;
+            vm.showing = game.id;
+        }
+        else if(vm.showing == game.id && vm.details == true){
+            vm.details = false;
+        }
+        //the same && false
+        else if(vm.showing == game.id && vm.details == false){
+            vm.details = true;
+        }
+        //different && true
+        else if(vm.showing != game.id && vm.details == true){
+            vm.showing = game.id;
+        }
 	}
 }
 
@@ -68,7 +91,7 @@ function FixturesFactory($http){
 	//////////////////////////////
 
 	function getGames(sport, league){
-		var url = "https://api.stattleship.com/" + sport + "/" + league + "/games";
+		var url = "https://api.stattleship.com/" + sport + "/" + league + "/games?on=today";
 		var custom_headers = {
 			headers :{
 				'Authorization': 'Token token=34d56c576cb68e5af75f5c6667a3f0e2',
