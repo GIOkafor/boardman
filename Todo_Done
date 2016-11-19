@@ -1,9 +1,15 @@
 Summary 
 ------------
+Steps now is to get just one details section to expand and get response from user regarding game outcome
+
+or not 
+
+Regarding point below decided to move calls to server side based on user query
+In addition to figuring out how to handle routing in a cleaner manner 
+
 Getting data back in json format successfully
 
 Going to have to edit the display of said info 
-In addition to figuring out how to handle routing in a cleaner manner 
 
 Done
 ------------------------

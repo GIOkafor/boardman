@@ -1,12 +1,23 @@
 <div class="leagues" ng-class="{hidden: hide, show: show}">
 	<div class="list-group">
-		<a href="#" class="list-group-item" ng-click="changeClass()">NBA</a>
-		<a href="#" class="list-group-item" ng-click="">NHL</a>
-		<a href="#" class="list-group-item" ng-click="showLeagues()">NFL</a>
-		<a href="#" class="list-group-item">MLB</a>
+		<a href="#" class="list-group-item" ng-click="showGames('basketball','nba')">NBA</a>
+		<a href="#" class="list-group-item" ng-click="showGames('hockey','nhl')">NHL</a>
+		<a href="#" class="list-group-item" ng-click="showGames('football','nfl')">NFL</a>
+		<a href="#" class="list-group-item" ng-click="showGames('baseball','mlb')">MLB</a>
 		<a href="#" class="list-group-item">EPL</a>
 		<a href="#" class="list-group-item">La Liga</a>
 		<a href="#" class="list-group-item">Bundesliga</a>
 		<a href="#" class="list-group-item">Seria A</a>
+	</div>
+
+	<h3>Upcoming games</h3>
+	
+	<div class="fixture" ng-repeat="game in games | orderBy:'timestamp'">
+		<a href="#" ng-click="showDetails()">{{game.name}}</a>
+
+		<!-- Hidden Section -->
+		<div class="fixture_details" ng-show="details">
+			Extra actionable stuff goes here
+		</div>
 	</div>
 </div>

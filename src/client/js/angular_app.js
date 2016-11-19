@@ -34,15 +34,25 @@ angular
 	});
 
 function BetCreationController($scope, $state, FixturesFactory) {
+	$scope.games = [];
+	$scope.details = false;
 
 	//functions
-	$scope.showLeagues = function(){
+	$scope.showGames = function(sport, league){
 		console.log("Showing leagues");
-		var promise = FixturesFactory.getGames();
+		var promise = FixturesFactory.getGames(sport, league);
 		promise.then(function(payload){
 			console.log(payload);
-			$state.go('fixtures', {games: payload.data});
+			//$state.go('fixtures', {games: payload.data});
+			$scope.games = payload;
 		})
+	}
+
+	$scope.showDetails = function(){
+		if($scope.details == false)
+		$scope.details = true;
+	else
+		$scope.details=false;
 	}
 }
 
@@ -57,8 +67,8 @@ function FixturesFactory($http){
 
 	//////////////////////////////
 
-	function getGames(){
-		var url = "https://api.stattleship.com/baseball/mlb/games";
+	function getGames(sport, league){
+		var url = "https://api.stattleship.com/" + sport + "/" + league + "/games";
 		var custom_headers = {
 			headers :{
 				'Authorization': 'Token token=34d56c576cb68e5af75f5c6667a3f0e2',
