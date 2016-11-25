@@ -40,20 +40,26 @@ function BetCreationController(FixturesFactory) {
 	/*jshint validthis:true*/
     var vm = this;
 
-    vm.games = [];
+    vm.data = [];
+    vm.outcomes = [];
 	vm.details = false;
     vm.showing = '';
+    vm.away_team = '';
+	vm.home_team ='';
 
 	//functions
+
+	//shows fixtures happening today
 	vm.showGames = function(sport, league){
 		console.log("Showing leagues");
 		var promise = FixturesFactory.getGames(sport, league);
 		promise.then(function(payload){
 			console.log(payload);
-			vm.games = payload;
+			vm.data = payload;
 		})
 	}
 
+//hides or shows more details ad options regarding games
 	vm.showDetails = function(game){
 		//testing code
         console.log("Name is "+game.name);
@@ -76,7 +82,34 @@ function BetCreationController(FixturesFactory) {
         else if(vm.showing != game.id && vm.details == true){
             vm.showing = game.id;
         }
+
+        //call the parser to get home and away teams
+        var teams = getTeamName(game.title);
+        vm.away_team = (teams[0]);
+        vm.home_team = (teams[1]);
+
+        //testing code
+        console.log(vm.away_team);
+        console.log(vm.home_team);
 	}
+
+	vm.saveOutcome = function(team, result){
+		var outcome = team + " " + result;
+		
+		if(vm.outcomes.indexOf(outcome) == -1){
+			vm.outcomes.push(outcome);
+			console.log(vm.outcomes);
+		}
+		else
+			console.log("Item already in bet slip");
+	}
+
+//parses team name from title
+	function getTeamName(title){
+		var teams = title.split(" vs ");
+		return teams;
+	}
+
 }
 
 function FixturesFactory($http){
@@ -109,7 +142,7 @@ function FixturesFactory($http){
 
 					//main here
 					//store array of games
-					games = response.data.games;
+					games = response.data;
 					return games;
 
 				}, function errorCallBack(){

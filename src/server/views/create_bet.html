@@ -7,7 +7,7 @@
 
 <h1>Create bet</h1>
 
-<div class="container" ng-controller="BetCreationController">
+<div class="container" ng-controller="BetCreationController as bet">
 	<div class="row">
 		<div class="col-xs-12 col-sm-6 col-md-8 event">
 			<h4>Events/Fixture</h4>
@@ -21,6 +21,12 @@
 
 		<div class="col-xs-6 col-md-4 well bet_slip">
 			<h4>Bet Slip</h4>
+
+			{{bet.outcomes}}
+
+			<div class="user_bets" ng-repeat="outcome in bet.outcomes">
+				{{outcome}}
+			</div>
 		</div>
 	</div>
 </div>

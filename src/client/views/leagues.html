@@ -1,26 +1,43 @@
-<div class="leagues" ng-class="{hidden: hide, show: show}" ng-controller="BetCreationController as bet">
+<div class="leagues" ng-class="{hidden: hide, show: show}">
 	<div class="list-group">
 		<a href="#" class="list-group-item" ng-click="bet.showGames('basketball','nba')">NBA</a>
 		<a href="#" class="list-group-item" ng-click="bet.showGames('hockey','nhl')">NHL</a>
 		<a href="#" class="list-group-item" ng-click="bet.showGames('football','nfl')">NFL</a>
 		<a href="#" class="list-group-item" ng-click="bet.showGames('baseball','mlb')">MLB</a>
+		<!--
 		<a href="#" class="list-group-item">EPL</a>
 		<a href="#" class="list-group-item">La Liga</a>
 		<a href="#" class="list-group-item">Bundesliga</a>
 		<a href="#" class="list-group-item">Seria A</a>
+		-->
 	</div>
 
 	<div class="fixtures">
 		<h3>Upcoming games</h3>
 	
-		<div class="fixture" ng-repeat="game in bet.games | orderBy:'timestamp'">
-			<a href="#" ng-click="bet.showDetails(game)">{{game.name}}</a>
+		<div class="panel panel-info fixture" ng-repeat="game in bet.data.games | orderBy:'timestamp'">
+			<div class="panel-heading">
+				<a class="panel-title fixture_header" href="#" ng-click="bet.showDetails(game)">{{game.name}}</a>
+			</div>
 
-			<!-- Hidden Section -->
-			<div class="fixture_details" ng-show="bet.showing == game.id && bet.details == true">
-				Extra actionable stuff goes here
+			<!-- Fixtture Details Hidden Section -->
+			<div class="panel-body fixture_details" ng-show="bet.showing == game.id && bet.details == true">
+				<div class="outcomes">
+					<div class="outcome_div">
+						<h5>Outcome</h5> 
+						<span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Pick one outcome"></span>
+					</div>
+
+					<div>
+						<button ng-click="bet.saveOutcome(bet.away_team, 'win')">{{bet.away_team}} Win</button>
+						<!--
+							<button>Other</button>
+						-->
+						<button ng-click="bet.saveOutcome(bet.home_team, 'win')">{{bet.home_team}} Win</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	
+				
 </div>

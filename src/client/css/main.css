@@ -33,6 +33,23 @@
     width: 600px;
 }
 
+a.fixture_header, a.fixture_header:focus{
+    text-decoration: none;
+    color: #fff;
+}
+
+.outcomes{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.outcome_div{
+    display: inline-flex;
+    align-items: center;
+}
+.outcome_div h5{padding-right: 10px;}
+
 .CUSTOM_CARD_GOOGLE{
 	background-color: #fff;
     height: 44px;
