@@ -9,25 +9,16 @@
 
 <div class="container" ng-controller="BetCreationController as bet">
 	<div class="row">
-		<div class="col-xs-12 col-sm-6 col-md-8 event">
+		<div class="col-xs-12 col-sm-12 col-md-12 event">
 			<h4>Events/Fixture</h4>
 				<a class="btn btn-primary" ui-sref="leagues">League</a>
 				<a class="btn btn-primary" ui-sref="fixtures">Featured Event</a>
 				
 				<ui-view>
-					Contents go here
+					<!--Contents go here -->
 				</ui-view>
 		</div>
 
-		<div class="col-xs-6 col-md-4 well bet_slip">
-			<h4>Bet Slip</h4>
-
-			{{bet.outcomes}}
-
-			<div class="user_bets" ng-repeat="outcome in bet.outcomes">
-				{{outcome}}
-			</div>
-		</div>
 	</div>
 </div>
 

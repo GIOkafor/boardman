@@ -1,5 +1,18 @@
 Summary 
 ------------
+Publishing user bet
+	- Get form info via front end
+		- Add fields to form
+
+	- Store in Db by making controller route call
+	- Notify user suc/fail
+	- Redirect/Clean up
+
+Betslip delete --> 20mins
+
+Betslip item styles --> 45mins
+
+Bet slip not updating based on user input
 Move Betslip to front end so it responds to user actions and whatnot
 
 

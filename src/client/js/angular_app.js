@@ -6,6 +6,7 @@ angular
 	.module('app', ['ui.router'])
 	.controller('BetCreationController', BetCreationController)
 	.factory('FixturesFactory', FixturesFactory)
+	.factory('BetFactory', BetFactory)
 	.config(function($stateProvider){
 		var leaguesState = {
 			name: 'leagues',
@@ -33,21 +34,21 @@ angular
 		$stateProvider.state(fixtureDetailsState);
 	});
 
-//injectables-go-here
-BetCreationController.$inject = ['FixturesFactory'];
+//injectables-go-here inline with controller format
+BetCreationController.$inject = ['FixturesFactory', 'BetFactory'];
 
-function BetCreationController(FixturesFactory) {
+function BetCreationController(FixturesFactory, BetFactory) {
 	/*jshint validthis:true*/
     var vm = this;
 
     vm.data = [];
-    vm.outcomes = [];
+	vm.outcomes = BetFactory.getBetSlip();
 	vm.details = false;
-    vm.showing = '';
+    vm.showing = {};
     vm.away_team = '';
 	vm.home_team ='';
 
-	//functions
+	//////////////////////////////functions
 
 	//shows fixtures happening today
 	vm.showGames = function(sport, league){
@@ -64,44 +65,47 @@ function BetCreationController(FixturesFactory) {
 		//testing code
         console.log("Name is "+game.name);
         console.log("Clicked ID is "+ game.id);
-        console.log("Showing ID is "+ vm.showing);
+        console.log("Showing ID is "+ vm.showing.id);
         console.log("Details status is "+ vm.details);
 
-        if(vm.showing != game.id && vm.details == false){
+        if(vm.showing.id != game.id && vm.details == false){
             vm.details = true;
-            vm.showing = game.id;
+            vm.showing.id = game.id;
+            vm.showing.title = game.title;
         }
-        else if(vm.showing == game.id && vm.details == true){
+        else if(vm.showing.id == game.id && vm.details == true){
             vm.details = false;
         }
         //the same && false
-        else if(vm.showing == game.id && vm.details == false){
+        else if(vm.showing.id == game.id && vm.details == false){
             vm.details = true;
         }
         //different && true
-        else if(vm.showing != game.id && vm.details == true){
-            vm.showing = game.id;
+        else if(vm.showing.id != game.id && vm.details == true){
+            vm.showing.id = game.id;
+            vm.showing.title = game.title;
         }
 
         //call the parser to get home and away teams
         var teams = getTeamName(game.title);
         vm.away_team = (teams[0]);
         vm.home_team = (teams[1]);
-
-        //testing code
-        console.log(vm.away_team);
-        console.log(vm.home_team);
 	}
 
+//adds user prediction of game results to betslip
 	vm.saveOutcome = function(team, result){
-		var outcome = team + " " + result;
-		
-		if(vm.outcomes.indexOf(outcome) == -1){
-			vm.outcomes.push(outcome);
-			console.log(vm.outcomes);
-		}
-		else
-			console.log("Item already in bet slip");
+		var gameID = vm.showing.id;
+		var gameTitle = vm.showing.title;
+
+		BetFactory.addBet(team, result, gameID, gameTitle);
+		//update bet slip in controller to update view
+		vm.outcomes = BetFactory.getBetSlip();
+	}
+
+	vm.removeOutcome = function(outcome){
+		BetFactory.removeBet(outcome);
+		//works without timeout
+		vm.outcomes = BetFactory.getBetSlip();
 	}
 
 //parses team name from title
@@ -150,4 +154,56 @@ function FixturesFactory($http){
 					}
 		);
 	}
+}
+
+function BetFactory(){
+	var bet_slip = [];
+
+	//for tracking games that have been bet on
+	var games = [];
+
+	var user_bet = {
+		addBet: addBet,
+		removeBet: removeBet,
+		getBetSlip: getBetSlip
+	};
+
+	return user_bet;
+
+	//////////////////////////////////////////////////////////
+
+	function addBet(team, result, gameID, gameTitle){
+		var outcome = {};
+		outcome.fixture = gameTitle;
+		outcome.result = team + " " + result;
+		outcome.id = gameID;
+
+		
+		if(bet_slip.indexOf(outcome) == -1 && games.indexOf(gameID) == -1){
+			bet_slip.push(outcome);
+			games.push(gameID);
+		}
+		else if(bet_slip.indexOf(outcome) == -1 && games.indexOf(gameID) != -1)
+			console.log("You have already bet on this game");
+		else
+			console.log("Item already in bet slip");
+	}
+
+	function getBetSlip(){
+		return bet_slip;
+	}
+
+	function removeBet(outcome){
+		var gameID = outcome.id;
+		var bet_slip_index = bet_slip.indexOf(outcome);
+		var games_index = games.indexOf(gameID);
+
+		console.log("Removing: "+ outcome.fixture);
+
+		bet_slip.splice(bet_slip_index, 1);
+		games.splice(games_index, 1);
+
+		console.log("Delete successfull");
+	}
+
 }

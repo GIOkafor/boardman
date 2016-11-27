@@ -30,8 +30,9 @@
 	display: flex;
 	align-items: flex-start;
     justify-content: space-between;
-    width: 600px;
 }
+
+.fixtures h3{margin-top: 0px;}
 
 a.fixture_header, a.fixture_header:focus{
     text-decoration: none;
@@ -46,9 +47,36 @@ a.fixture_header, a.fixture_header:focus{
 
 .outcome_div{
     display: inline-flex;
-    align-items: center;
 }
-.outcome_div h5{padding-right: 10px;}
+.outcome_div h5{padding-right: 10px; margin-top: 0px;}
+
+.bet_slip_outcome{
+    display: flex;
+    background-color: #9cc5d2;
+    color: #000;
+    padding: 10px;
+    border-bottom: 1px solid #ffffff;
+    justify-content: space-between;
+}
+
+#bet_slip_fixture{
+    font-weight: bold;
+}
+
+#bet_slip_result{
+    font-size: 13px;
+}
+
+.bet_slip_action{
+    background-color: #9cc5d2;
+    color: #484848;
+    border: none;
+}
+
+.bet_slip_details{
+    display: flex;
+    flex-flow: column;
+}
 
 .CUSTOM_CARD_GOOGLE{
 	background-color: #fff;

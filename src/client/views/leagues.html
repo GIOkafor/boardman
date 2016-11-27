@@ -15,13 +15,13 @@
 	<div class="fixtures">
 		<h3>Upcoming games</h3>
 	
-		<div class="panel panel-info fixture" ng-repeat="game in bet.data.games | orderBy:'timestamp'">
+		<div class="panel panel-primary fixture" ng-repeat="game in bet.data.games | orderBy:'timestamp'">
 			<div class="panel-heading">
 				<a class="panel-title fixture_header" href="#" ng-click="bet.showDetails(game)">{{game.name}}</a>
 			</div>
 
 			<!-- Fixtture Details Hidden Section -->
-			<div class="panel-body fixture_details" ng-show="bet.showing == game.id && bet.details == true">
+			<div class="panel-body fixture_details" ng-show="bet.showing.id == game.id && bet.details == true">
 				<div class="outcomes">
 					<div class="outcome_div">
 						<h5>Outcome</h5> 
@@ -29,15 +29,48 @@
 					</div>
 
 					<div>
-						<button ng-click="bet.saveOutcome(bet.away_team, 'win')">{{bet.away_team}} Win</button>
+						<button class="btn btn-primary" ng-click="bet.saveOutcome(bet.away_team, 'win')">{{bet.away_team}} Win</button>
 						<!--
 							<button>Other</button>
 						-->
-						<button ng-click="bet.saveOutcome(bet.home_team, 'win')">{{bet.home_team}} Win</button>
+						<button class="btn btn-primary" ng-click="bet.saveOutcome(bet.home_team, 'win')">{{bet.home_team}} Win</button>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<div class="col-xs-6 col-md-4 well bet_slip">
+		<h4>Bet Slip</h4>
+
+		<div class="user_bets">
+			<div ng-repeat="outcome in bet.outcomes" class="bet_slip_outcome">
+				<div class="bet_slip_details">
+					<span id="bet_slip_fixture">{{outcome.fixture}}</span>
+					<span id="bet_slip_result">{{outcome.result}}</span>
+				</div>
+
+				<button class="glyphicon glyphicon-remove bet_slip_action" ng-click="bet.removeOutcome(outcome);"></button>
+			</div>
+		</div>
+
+		<div class="user_odds">
+			<form id="create-new-bet">
+				<div class="form-group">
+					<label for="stake" class="control-label">Stake</label>
+					<input type="number" id="stake" class="form-control" placeholder="">
+				</div>
+				<div class="form-group">
+					<label for="match_stake" class="control-label">Match Stake</label>
+					<input type="number" id="match_stake" class="form-control" placeholder="">
+				</div>
+				<div class="form-group">
+					<label for="" class="control-label">Returns</label>
+					<input type="number" id="returns" class="form-control" placeholder="">
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>	
 	</div>
 				
 </div>
