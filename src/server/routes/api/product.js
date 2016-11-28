@@ -5,6 +5,7 @@ var mongoose = require('mongoose-q')(require('mongoose'));
 var passport = require('../../lib/auth');
 var helpers = require('../../lib/helpers');
 var Product = require('../../models/product');
+var Bet = require('../../models/bet_slip');
 
 
 // ** products ** //
@@ -90,10 +91,10 @@ router.post('/products', helpers.ensureAdminJSON,
 router.post('/bet', helpers.ensureAuthenticated,
   function(req, res, next){
     var bet = new Bet({
-      author: req.user,
-      stake: req.body.stake,
-      match_stake: req.body.match_stake,
-      returns: req.body.returns
+      author: req.user.username,
+      stake: req.body.bet.stake,
+      match_stake: req.body.bet.match_stake,
+      returns: req.body.bet.returns
     });
     bet.saveQ()
     .then(function(result){
@@ -101,7 +102,7 @@ router.post('/bet', helpers.ensureAuthenticated,
       .json({
         status: 'success',
         data: result,
-        message: 'Created bet.'
+        message: 'Created bet succesfully.'
       });
     })
     .catch(function(err){

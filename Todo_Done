@@ -1,12 +1,25 @@
 Summary 
 ------------
+Doing
+------------------------------------------------
 Publishing user bet
-	- Get form info via front end
-		- Add fields to form
-
 	- Store in Db by making controller route call
+		- build db_schemas
+			-betslip
+			-bet
+
+		- configure routes
+			-bet_route
+
 	- Notify user suc/fail
 	- Redirect/Clean up
+
+	
+
+Done
+------------------------
+- Get form info via front end
+		- Add fields to form	
 
 Betslip delete --> 20mins
 
@@ -27,8 +40,7 @@ Getting data back in json format successfully
 
 Going to have to edit the display of said info 
 
-Done
-------------------------
+
 * individual homescreen bet partial 
 * bet_slip model created
 * get route to bet by id 

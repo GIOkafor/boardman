@@ -35,9 +35,9 @@ angular
 	});
 
 //injectables-go-here inline with controller format
-BetCreationController.$inject = ['FixturesFactory', 'BetFactory'];
+BetCreationController.$inject = ['FixturesFactory', 'BetFactory', '$http'];
 
-function BetCreationController(FixturesFactory, BetFactory) {
+function BetCreationController(FixturesFactory, BetFactory, $http) {
 	/*jshint validthis:true*/
     var vm = this;
 
@@ -114,6 +114,17 @@ function BetCreationController(FixturesFactory, BetFactory) {
 		return teams;
 	}
 
+//submits user bet
+	vm.placeBet = function(bet){
+		var details = BetFactory.getBetSlip();
+		var promise = $http.post('api/v1/bet', {bet: bet, details: details});
+
+		promise.then(function success(payload){
+			console.log(payload.data);
+		}, function fail(error){
+			console.log("Action Failed with: "+ error.data);
+		});
+	}
 }
 
 function FixturesFactory($http){

@@ -15,12 +15,12 @@
 	<div class="fixtures">
 		<h3>Upcoming games</h3>
 	
-		<div class="panel panel-primary fixture" ng-repeat="game in bet.data.games | orderBy:'timestamp'">
+		<div class="panel panel-primary fixture" ng-repeat="game in bet.data.games | orderBy:'timestamp'" ng-if="bet.data.games.length > 0">
 			<div class="panel-heading">
 				<a class="panel-title fixture_header" href="#" ng-click="bet.showDetails(game)">{{game.name}}</a>
 			</div>
 
-			<!-- Fixtture Details Hidden Section -->
+			<!-- Fixture Details Hidden Section -->
 			<div class="panel-body fixture_details" ng-show="bet.showing.id == game.id && bet.details == true">
 				<div class="outcomes">
 					<div class="outcome_div">
@@ -38,6 +38,9 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- No games found -->
+		<div ng-if="bet.data.games.length == 0">No games to show</div>
 	</div>
 
 	<div class="col-xs-6 col-md-4 well bet_slip">
@@ -58,17 +61,17 @@
 			<form id="create-new-bet">
 				<div class="form-group">
 					<label for="stake" class="control-label">Stake</label>
-					<input type="number" id="stake" class="form-control" placeholder="">
+					<input type="number" id="stake" class="form-control" placeholder="Enter your stake" ng-model="new_bet.stake">
 				</div>
 				<div class="form-group">
 					<label for="match_stake" class="control-label">Match Stake</label>
-					<input type="number" id="match_stake" class="form-control" placeholder="">
+					<input type="number" id="match_stake" class="form-control" placeholder="Buy in fee" ng-model="new_bet.match_stake">
 				</div>
 				<div class="form-group">
 					<label for="" class="control-label">Returns</label>
-					<input type="number" id="returns" class="form-control" placeholder="">
+					<input type="number" id="returns" class="form-control" placeholder="Expected returns"  ng-model="new_bet.returns">
 				</div>
-				<button type="submit" class="btn btn-primary">Submit</button>
+				<button type="submit" class="btn btn-primary" ng-click="bet.placeBet(new_bet);">Submit</button>
 			</form>
 		</div>	
 	</div>
